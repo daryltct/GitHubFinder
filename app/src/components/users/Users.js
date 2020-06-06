@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import { UserContext } from '../../UserContext';
 import UserItem from './UserItem';
+import Spinner from '../layouts/Spinner';
 
 function Users() {
 	const { usersData, loading } = useContext(UserContext);
@@ -9,7 +10,7 @@ function Users() {
 		return <UserItem key={user.id} user={user} />;
 	});
 
-	return <div className="grid-3">{usersComponents}</div>; //
+	return loading ? <Spinner /> : <div className="grid-3">{usersComponents}</div>;
 }
 
 export default Users;

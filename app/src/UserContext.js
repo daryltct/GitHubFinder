@@ -9,7 +9,12 @@ function UserContextProvider(props) {
 
 	useEffect(async () => {
 		setLoading(true);
-		const res = await axios.get('https://api.github.com/users');
+		const github = axios.create({
+			baseURL: 'https://api.github.com',
+			timeout: 2000,
+			headers: { Authorization: process.env.REACT_APP_GITHUB_TOKEN }
+		});
+		const res = await github.get('/users');
 		setUsersData(res.data);
 		setLoading(false);
 	}, []);
