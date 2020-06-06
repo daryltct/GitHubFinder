@@ -14,6 +14,7 @@ const github = axios.create({
 function UserContextProvider(props) {
 	const [ usersData, setUsersData ] = useState([]);
 	const [ userDetails, setUserDetails ] = useState({});
+	const [ userRepos, setUserRepos ] = useState([]);
 	const [ loading, setLoading ] = useState(false);
 
 	const { handleAlert } = useContext(AlertContext);
@@ -29,8 +30,12 @@ function UserContextProvider(props) {
 	//Get selected user details
 	async function getUser(username) {
 		setLoading(true);
-		const res = await github.get(`/users/${username}?`);
-		setUserDetails(res.data);
+		//get user details
+		const user = await github.get(`/users/${username}?`);
+		setUserDetails(user.data);
+		//get user repos
+		const repos = await github.get(`/users/${username}/repos?per_page=5&sort=created:asc?`);
+		setUserRepos(repos.data);
 		setLoading(false);
 	}
 
@@ -39,7 +44,7 @@ function UserContextProvider(props) {
 	}
 
 	return (
-		<UserContext.Provider value={{ usersData, loading, searchUser, clearUsers, userDetails, getUser }}>
+		<UserContext.Provider value={{ usersData, loading, searchUser, clearUsers, userDetails, getUser, userRepos }}>
 			{props.children}
 		</UserContext.Provider>
 	);

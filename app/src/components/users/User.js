@@ -3,13 +3,15 @@ import { useParams, Link } from 'react-router-dom';
 
 import { UserContext } from '../../context/UserContext';
 import Spinner from '../layouts/Spinner';
+import Repos from './repos/Repos';
 
 function User() {
-	const { userDetails, getUser, loading } = useContext(UserContext);
+	const { userDetails, userRepos, getUser, loading } = useContext(UserContext);
 	const { login } = useParams();
 
 	useEffect(() => {
 		getUser(login);
+		console.log(userRepos);
 	}, []);
 
 	const {
@@ -84,6 +86,7 @@ function User() {
 				<div className="badge badge-light">Public Repos:: {public_repos}</div>
 				<div className="badge badge-dark">Public Gists: {public_gists}</div>
 			</div>
+			<Repos />
 		</Fragment>
 	);
 }
