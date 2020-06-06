@@ -1,8 +1,10 @@
 import React, { useState, useContext } from 'react';
-import { UserContext } from '../../UserContext';
+import { UserContext } from '../../context/UserContext';
+import { AlertContext } from '../../context/AlertContext';
 
 function Search() {
 	const { usersData, searchUser, clearUsers } = useContext(UserContext);
+	const { handleAlert } = useContext(AlertContext);
 	const [ text, setText ] = useState('');
 
 	function handleChange(event) {
@@ -12,8 +14,12 @@ function Search() {
 
 	async function handleSubmit(event) {
 		event.preventDefault();
-		await searchUser(text);
-		setText('');
+		if (text === '') {
+			handleAlert('Please enter something', 'light');
+		} else {
+			await searchUser(text);
+			setText('');
+		}
 	}
 
 	const showClear = usersData.length > 0 ? true : false;
