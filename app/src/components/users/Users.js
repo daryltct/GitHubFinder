@@ -1,25 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { UserContext } from '../../UserContext';
 import UserItem from './UserItem';
 
 function Users() {
-	const [ usersData, setUsersData ] = useState([]);
-	const [ isLoading, setIsLoading ] = useState(false);
-
-	//Fetch users data when component mounts
-	useEffect(() => {
-		fetch('https://api.github.com/users')
-			.then((res) => res.json()) //
-			.then((data) => {
-				setUsersData(data);
-				setIsLoading(true);
-			});
-	}, []);
+	const { usersData, loading } = useContext(UserContext);
 
 	const usersComponents = usersData.map((user) => {
 		return <UserItem key={user.id} user={user} />;
 	});
 
-	return <div>{usersComponents}</div>; //
+	return <div className="grid-3">{usersComponents}</div>; //
 }
 
 export default Users;
