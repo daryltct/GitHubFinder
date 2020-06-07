@@ -1,17 +1,17 @@
 import React, { useEffect, useContext, Fragment } from 'react';
 import { useParams, Link } from 'react-router-dom';
 
-import { UserContext } from '../../context/UserContext';
+import { UserContext } from '../../context/user/UserContext';
 import Spinner from '../layouts/Spinner';
 import Repos from './repos/Repos';
 
 function User() {
-	const { userDetails, userRepos, getUser, loading } = useContext(UserContext);
+	const { userDetails, getUser, loading, dispatch } = useContext(UserContext);
 	const { login } = useParams();
 
 	useEffect(() => {
-		getUser(login);
-		console.log(userRepos);
+		dispatch({ type: 'SET_LOADING' });
+		getUser(login).then((res) => dispatch({ type: 'GET_USER', payload: res }));
 	}, []);
 
 	const {

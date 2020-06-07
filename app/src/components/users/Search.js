@@ -1,9 +1,9 @@
 import React, { useState, useContext } from 'react';
-import { UserContext } from '../../context/UserContext';
+import { UserContext } from '../../context/user/UserContext';
 import { AlertContext } from '../../context/AlertContext';
 
 function Search() {
-	const { usersData, searchUser, clearUsers } = useContext(UserContext);
+	const { usersData, searchUser, dispatch } = useContext(UserContext);
 	const { handleAlert } = useContext(AlertContext);
 	const [ text, setText ] = useState('');
 
@@ -17,7 +17,9 @@ function Search() {
 		if (text === '') {
 			handleAlert('Please enter something', 'light');
 		} else {
-			await searchUser(text);
+			dispatch({ type: 'SET_LOADING' });
+			const res = await searchUser(text);
+			dispatch({ type: 'SEARCH_USER', payload: res });
 			setText('');
 		}
 	}
@@ -31,7 +33,7 @@ function Search() {
 				<input type="submit" value="Search" className="btn btn-dark btn-block" />
 			</form>
 			{showClear && (
-				<button className="btn btn-light btn-block" onClick={clearUsers}>
+				<button className="btn btn-light btn-block" onClick={() => dispatch({ type: 'CLEAR_USERS' })}>
 					Clear
 				</button>
 			)}

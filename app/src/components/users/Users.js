@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { UserContext } from '../../context/UserContext';
+import { UserContext } from '../../context/user/UserContext';
 import UserItem from './UserItem';
 import Spinner from '../layouts/Spinner';
 

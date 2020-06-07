@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 
 import RepoItem from './RepoItem';
-import { UserContext } from '../../../context/UserContext';
+import { UserContext } from '../../../context/user/UserContext';
 
 function Repos() {
 	const { userRepos } = useContext(UserContext);
