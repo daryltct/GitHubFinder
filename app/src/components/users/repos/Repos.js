@@ -5,7 +5,6 @@ import { UserContext } from '../../../context/user/UserContext';
 
 function Repos() {
 	const { userRepos } = useContext(UserContext);
-	console.log(userRepos);
 
 	const repoComponents = userRepos.map((repo) => {
 		return <RepoItem key={repo.id} repo={repo} />;

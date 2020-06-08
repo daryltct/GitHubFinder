@@ -5,6 +5,7 @@ import NavBar from './components/layouts/NavBar';
 import Alert from './components/layouts/Alert';
 import Home from './components/pages/Home';
 import User from './components/users/User';
+import Error from './components/pages/Error';
 
 function App() {
 	return (
@@ -19,6 +20,9 @@ function App() {
 						</Route>
 						<Route path="/user/:login">
 							<User />
+						</Route>
+						<Route>
+							<Error />
 						</Route>
 					</Switch>
 				</div>

@@ -1,4 +1,5 @@
 import React, { useReducer } from 'react';
+import { Redirect } from 'react-router-dom';
 import userReducer from './userReducer';
 import axios from 'axios';
 
@@ -14,7 +15,8 @@ const initialState = {
 	usersData: [],
 	userDetails: {},
 	userRepos: [],
-	loading: false
+	loading: false,
+	error: null
 };
 
 function UserContextProvider(props) {
@@ -28,14 +30,22 @@ function UserContextProvider(props) {
 
 	//Get selected user details
 	async function getUser(username) {
-		//get user data
-		const user = await github.get(`/users/${username}?`);
-		//get user repos
-		const repos = await github.get(`/users/${username}/repos?per_page=5&sort=created:asc?`);
-		return {
-			user: user.data,
-			repos: repos.data
-		};
+		try {
+			//get user data
+			const user = await github.get(`/users/${username}?`);
+			//get user repos
+			const repos = await github.get(`/users/${username}/repos?per_page=5&sort=created:asc?`);
+			return {
+				user: user.data,
+				repos: repos.data
+			};
+		} catch (err) {
+			return {
+				user: {},
+				repos: [],
+				error: err
+			};
+		}
 	}
 
 	return (

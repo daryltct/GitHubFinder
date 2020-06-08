@@ -16,6 +16,7 @@ export default function userReducer(state, action) {
 				...state,
 				userDetails: action.payload.user,
 				userRepos: action.payload.repos,
+				error: action.payload.error,
 				loading: false
 			};
 		case 'CLEAR_USERS':
@@ -23,6 +24,18 @@ export default function userReducer(state, action) {
 				...state,
 				usersData: [],
 				loading: false
+			};
+		case 'FETCH_ERROR':
+			return {
+				usersData: [],
+				userDetails: {},
+				userRepos: [],
+				loading: false
+			};
+		case 'CLEAR_ERROR':
+			return {
+				...state,
+				error: null
 			};
 		default:
 			return state;

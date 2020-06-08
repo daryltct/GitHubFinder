@@ -1,12 +1,13 @@
 import React, { useEffect, useContext, Fragment } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, Redirect } from 'react-router-dom';
 
 import { UserContext } from '../../context/user/UserContext';
 import Spinner from '../layouts/Spinner';
 import Repos from './repos/Repos';
+import Error from '../pages/Error';
 
 function User() {
-	const { userDetails, getUser, loading, dispatch } = useContext(UserContext);
+	const { userDetails, getUser, loading, error, dispatch } = useContext(UserContext);
 	const { login } = useParams();
 
 	useEffect(() => {
@@ -31,6 +32,8 @@ function User() {
 
 	return loading ? (
 		<Spinner />
+	) : error ? (
+		<Error />
 	) : (
 		<Fragment>
 			<Link to="/" className="btn btn-light">
